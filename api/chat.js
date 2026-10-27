@@ -1,5 +1,5 @@
 // api/chat.js - Vercel Serverless Function
-// Gọi Google Gemini 1.5 Flash API (Free Tier 100% không tốn tiền)
+// Gọi Google Gemini API (Free Tier 100% không tốn tiền)
 
 export default async function handler(req, res) {
   // CORS configuration
@@ -40,46 +40,60 @@ Nhiệm vụ:
 - Gợi ý thí sinh phân bổ nguyện vọng thông minh (NV1 yêu thích nhất, NV2-3 vừa tầm, NV4-5 an toàn).
 - Đính kèm lời khuyên thực tế về cơ hội nghề nghiệp và học bổng.`;
 
-  try {
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const formattedHistory = (chatHistory || []).slice(-6).map(item => ({
+    role: item.role === 'model' || item.role === 'bot' ? 'model' : 'user',
+    parts: [{ text: item.parts?.[0]?.text || item.text || '' }]
+  })).filter(item => item.parts[0].text);
 
-    const formattedHistory = (chatHistory || []).slice(-6).map(item => ({
-      role: item.role === 'model' || item.role === 'bot' ? 'model' : 'user',
-      parts: [{ text: item.parts?.[0]?.text || item.text || '' }]
-    })).filter(item => item.parts[0].text);
+  const contents = [
+    ...formattedHistory,
+    { role: 'user', parts: [{ text: message }] }
+  ];
 
-    const contents = [
-      ...formattedHistory,
-      { role: 'user', parts: [{ text: message }] }
-    ];
+  // Danh sách model thử lần lượt để đảm bảo luôn tương thích mọi loại API key
+  const candidateModels = [
+    'gemini-2.0-flash',
+    'gemini-1.5-flash-latest',
+    'gemini-1.5-flash-001',
+    'gemini-1.5-flash-002',
+    'gemini-1.5-pro',
+    'gemini-pro'
+  ];
 
-    const response = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: systemPrompt }]
-        },
-        contents: contents,
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 800
-        }
-      })
-    });
+  let lastError = null;
 
-    const data = await response.json();
-    if (!response.ok) {
-      console.error('Gemini API Error:', data);
-      return res.status(200).json({
-        reply: `Xin lỗi bạn, kết nối tới Gemini AI tạm thời gián đoạn (${data.error?.message || 'Lỗi API'}). Vui lòng thử lại sau ít phút!`
+  for (const model of candidateModels) {
+    try {
+      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      const response = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemPrompt }]
+          },
+          contents: contents,
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 800
+          }
+        })
       });
-    }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Mình chưa thể tìm ra câu trả lời phù hợp, bạn thử đặt lại câu hỏi cụ thể hơn nhé!";
-    return res.status(200).json({ reply });
-  } catch (error) {
-    console.error('Server error:', error);
-    return res.status(500).json({ error: 'Internal Server Error', details: error.message });
+      const data = await response.json();
+      if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+        return res.status(200).json({ reply: data.candidates[0].content.parts[0].text });
+      }
+
+      lastError = data.error?.message || 'Error calling model ' + model;
+    } catch (err) {
+      lastError = err.message;
+    }
   }
+
+  // Fallback nếu không gọi được model
+  return res.status(200).json({
+    reply: `Xin lỗi bạn, tạm thời chưa kết nối được tới mô hình Gemini (${lastError}). Hệ thống UniFind vẫn hỗ trợ bạn tra cứu điểm chuẩn và học phí qua kho dữ liệu sẵn có!`
+  });
 }
