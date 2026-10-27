@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx serve .",
-    "start": "npx serve .",
-    "build": "echo 'Static build ready'"
+    "start": "npx serve ."
   },
   "keywords": [
     "unifind",
