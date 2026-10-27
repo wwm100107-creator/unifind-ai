@@ -1,5 +1,5 @@
 // api/chat.js - Vercel Serverless Function
-// Tối ưu hóa siêu tốc: Sử dụng gemini-3.5-flash-lite (phản hồi nhanh nhất, không nghẽn)
+// Gọi Gemini AI với cơ chế tối ưu cho tư vấn tuyển sinh
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -25,10 +25,12 @@ export default async function handler(req, res) {
     return res.status(200).json({ reply: null });
   }
 
-  const systemPrompt = `Bạn là UniBot AI - trợ lý tuyển sinh thông minh của UniFind (Việt Nam).
-Yêu cầu:
-- Trả lời thật ngắn gọn, súc tích, đi thẳng vào trọng tâm trong 3-4 gạch đầu dòng.
-- Không rườm rà, giải thích nhanh các phương án chọn trường, chọn ngành cho thí sinh.`;
+  const systemPrompt = `Bạn là UniBot AI - chuyên gia tư vấn tuyển sinh đại học hàng đầu của nền tảng UniFind (Việt Nam).
+Nhiệm vụ:
+- Khi thí sinh hỏi về một ngành cụ thể kèm mức điểm thi (VD: 25 điểm ngành kinh doanh quốc tế, 24 điểm CNTT...), PHẢI tập trung 100% vào ngành đó.
+- Phân loại rõ: Nhóm vừa tầm (sát điểm), nhóm thử sức NV1 (cao hơn 0.8-1.5đ), nhóm an toàn (thấp hơn 1.5-2.5đ).
+- Nêu rõ tên trường, điểm chuẩn năm gần nhất, tổ hợp xét tuyển.
+- Trả lời bằng tiếng Việt thân thiện, súc tích, cấu trúc gạch đầu dòng rõ ràng.`;
 
   const formattedHistory = (chatHistory || []).slice(-4).map(item => ({
     role: item.role === 'model' || item.role === 'bot' ? 'model' : 'user',
@@ -40,19 +42,18 @@ Yêu cầu:
     { role: 'user', parts: [{ text: message }] }
   ];
 
-  // Danh sách model ưu tiên theo tốc độ
-  const fastModels = [
+  const candidateModels = [
     'gemini-3.5-flash-lite',
     'gemini-2.5-flash',
     'gemini-3.8-flash'
   ];
 
-  for (const model of fastModels) {
+  for (const model of candidateModels) {
     try {
       const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 7000); // Timeout 7s để không bắt người dùng đợi lâu
+      const timeoutId = setTimeout(() => controller.abort(), 7500);
 
       const response = await fetch(geminiUrl, {
         method: 'POST',
@@ -65,7 +66,7 @@ Yêu cầu:
           contents: contents,
           generationConfig: {
             temperature: 0.6,
-            maxOutputTokens: 350
+            maxOutputTokens: 500
           }
         })
       });
@@ -77,7 +78,7 @@ Yêu cầu:
         return res.status(200).json({ reply: data.candidates[0].content.parts[0].text });
       }
     } catch (err) {
-      // Thử model tiếp theo nếu lỗi
+      // Thử model tiếp theo
     }
   }
 
