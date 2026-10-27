@@ -1,0 +1,22 @@
+{
+  "name": "unifind-ai",
+  "version": "2.2.0",
+  "description": "UniFind - Nền tảng định hướng đại học & Chọn trường thông minh tích hợp AI Trợ lý tuyển sinh (100% Free)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build": "echo 'Static build ready'"
+  },
+  "keywords": [
+    "unifind",
+    "university",
+    "vietnam",
+    "tuyensinh",
+    "chatbot",
+    "gemini-ai"
+  ],
+  "author": "wwm100107-creator",
+  "license": "MIT"
+}
