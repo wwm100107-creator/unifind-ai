@@ -35,7 +35,7 @@ export default async function handler(req, res) {
 
   const systemPrompt = `Bạn là UniBot AI - trợ lý tư vấn tuyển sinh và định hướng đại học của nền tảng UniFind (Việt Nam).
 Nhiệm vụ:
-- Tư vấn chọn trường, ngành nghề, điểm chuẩn, và học phí năm 2026-2027.
+- Hỗ trợ học sinh và phụ huynh tư vấn chọn trường, ngành nghề, điểm chuẩn, và học phí năm 2026-2027.
 - Luôn trả lời bằng tiếng Việt thân thiện, nhiệt tình, có cấu trúc gạch đầu dòng rõ ràng.
 - Gợi ý thí sinh phân bổ nguyện vọng thông minh (NV1 yêu thích nhất, NV2-3 vừa tầm, NV4-5 an toàn).
 - Đính kèm lời khuyên thực tế về cơ hội nghề nghiệp và học bổng.`;
@@ -50,14 +50,13 @@ Nhiệm vụ:
     { role: 'user', parts: [{ text: message }] }
   ];
 
-  // Danh sách model thử lần lượt để đảm bảo luôn tương thích mọi loại API key
+  // Danh sách model ưu tiên
   const candidateModels = [
-    'gemini-2.0-flash',
-    'gemini-1.5-flash-latest',
-    'gemini-1.5-flash-001',
-    'gemini-1.5-flash-002',
-    'gemini-1.5-pro',
-    'gemini-pro'
+    'gemini-2.5-flash',
+    'gemini-flash-latest',
+    'gemini-2.5-flash-lite',
+    'gemini-flash-lite-latest',
+    'gemini-2.5-pro'
   ];
 
   let lastError = null;
