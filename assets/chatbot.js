@@ -1,5 +1,5 @@
-// UniBot AI Chatbot - Trợ lý tuyển sinh thông minh
-// 100% Miễn phí - Dual-Engine: Gemini AI 2.5 Flash + UniFind Knowledge Base
+// UniBot AI Chatbot - Trợ lý tuyển sinh siêu tốc
+// Tối ưu hóa: Instant Knowledge Match (< 0.1s) + Gemini 3.5 Flash Lite + Typewriter effect
 
 const UNIBOT_SCHOOLS = [{"id":"hcmus","name":"Trường Đại học Khoa học tự nhiên – ĐHQG TP.HCM","abbr":"HCMUS","city":"TP.HCM","kind":"Công lập","areas":["Công nghệ","Kỹ thuật"],"majors":["Công nghệ thông tin","Trí tuệ nhân tạo","Khoa học dữ liệu","Kỹ thuật điện - điện tử","An toàn thông tin"],"website":"https://hcmus.edu.vn","feeSummary":"37 – 70 triệu/năm"},{"id":"ptit","name":"Học viện Công nghệ Bưu chính Viễn thông","abbr":"PTIT","city":"Nhiều cơ sở","kind":"Công lập","areas":["Công nghệ","Kỹ thuật","Kinh tế"],"majors":["Công nghệ thông tin","An toàn thông tin","Kỹ thuật điện - điện tử","Marketing","Trí tuệ nhân tạo","Khoa học dữ liệu","Thương mại điện tử"],"website":"https://ptit.edu.vn","feeSummary":"35.9 – 58.3 triệu/năm"},{"id":"ctu","name":"Đại học Cần Thơ","abbr":"CTU","city":"Cần Thơ","kind":"Công lập","areas":["Kỹ thuật","Công nghệ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật xây dựng","Quản trị kinh doanh","Kế toán - Kiểm toán","Kỹ thuật ô tô","Kỹ thuật điện - điện tử","Marketing","Tài chính - Ngân hàng","Ngôn ngữ Anh","Luật"],"website":"https://ctu.edu.vn","feeSummary":"22 – 40 triệu/năm"},{"id":"huce","name":"Trường Đại học Xây dựng Hà Nội","abbr":"HUCE","city":"Hà Nội","kind":"Công lập","areas":["Kỹ thuật","Công nghệ"],"majors":["Kỹ thuật xây dựng","Công nghệ thông tin","Kỹ thuật điện - điện tử","Kỹ thuật cơ điện tử","Logistics","Quản trị kinh doanh"],"website":"https://huce.edu.vn","feeSummary":"16.4 – 45 triệu/năm"},{"id":"hau","name":"Trường Đại học Kiến trúc Hà Nội","abbr":"HAU","city":"Hà Nội","kind":"Công lập","areas":["Kỹ thuật","Sáng tạo"],"majors":["Kỹ thuật xây dựng","Thiết kế đồ họa","Kỹ thuật cơ điện tử","Công nghệ thông tin"],"website":"https://hau.edu.vn","feeSummary":"13.5 – 40 triệu/năm"},{"id":"ou","name":"Trường Đại học Mở TP.HCM","abbr":"OU","city":"TP.HCM","kind":"Công lập","areas":["Kinh tế","Công nghệ"],"majors":["Quản trị kinh doanh","Marketing","Kế toán - Kiểm toán","Công nghệ thông tin"],"website":"https://ou.edu.vn","feeSummary":"22 – 45 triệu/năm"},{"id":"hou","name":"Trường Đại học Mở Hà Nội","abbr":"HOU","city":"Hà Nội","kind":"Công lập","areas":["Kinh tế","Công nghệ"],"majors":["Quản trị kinh doanh","Kế toán - Kiểm toán","Công nghệ thông tin","Thương mại điện tử"],"website":"https://hou.edu.vn","feeSummary":"19.5 – 21 triệu/năm"},{"id":"duytan","name":"Đại học Duy Tân","abbr":"DTU","city":"Đà Nẵng","kind":"Tư thục","areas":["Kỹ thuật","Công nghệ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật xây dựng","Quản trị kinh doanh","Marketing"],"website":"https://duytan.edu.vn","feeSummary":"28 – 98.8 triệu/năm"},{"id":"hust","name":"Đại học Bách khoa Hà Nội","abbr":"HUST","city":"Hà Nội","kind":"Công lập","areas":["Kỹ thuật","Công nghệ"],"majors":["Công nghệ thông tin","Trí tuệ nhân tạo","Kỹ thuật cơ điện tử","Kỹ thuật điện - điện tử","Kỹ thuật ô tô","Khoa học dữ liệu","An toàn thông tin","Logistics","Kỹ thuật xây dựng"],"website":"https://hust.edu.vn","feeSummary":"28 – 68 triệu/năm"},{"id":"hcmut","name":"Trường Đại học Bách khoa – ĐHQG TP.HCM","abbr":"HCMUT","city":"TP.HCM","kind":"Công lập","areas":["Kỹ thuật","Công nghệ"],"majors":["Công nghệ thông tin","Kỹ thuật cơ điện tử","Kỹ thuật điện - điện tử","Kỹ thuật xây dựng","Kỹ thuật ô tô","Logistics","Khoa học dữ liệu"],"website":"https://hcmut.edu.vn","feeSummary":"31.5 – 88 triệu/năm"},{"id":"hcmute","name":"Trường Đại học Sư phạm Kỹ thuật TP.HCM","abbr":"HCMUTE","city":"TP.HCM","kind":"Công lập","areas":["Kỹ thuật","Công nghệ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật cơ điện tử","Kỹ thuật ô tô","Logistics","Quản trị kinh doanh","Kỹ thuật điện - điện tử","Kỹ thuật xây dựng","Thương mại điện tử","Thiết kế đồ họa"],"website":"https://hcmute.edu.vn","feeSummary":"28.8 – 58 triệu/năm"},{"id":"uit","name":"Trường Đại học Công nghệ Thông tin – ĐHQG TP.HCM","abbr":"UIT","city":"TP.HCM","kind":"Công lập","areas":["Công nghệ"],"majors":["Công nghệ thông tin","Trí tuệ nhân tạo","An toàn thông tin","Khoa học dữ liệu","Thương mại điện tử"],"website":"https://uit.edu.vn","feeSummary":"41 – 140 triệu/năm"},{"id":"uet","name":"Trường Đại học Công nghệ – ĐHQGHN","abbr":"UET","city":"Hà Nội","kind":"Công lập","areas":["Công nghệ","Kỹ thuật"],"majors":["Công nghệ thông tin","Trí tuệ nhân tạo","Kỹ thuật cơ điện tử","Kỹ thuật điện - điện tử"],"website":"https://uet.vnu.edu.vn","feeSummary":"38 – 44 triệu/năm"},{"id":"utc","name":"Trường Đại học Giao thông Vận tải","abbr":"UTC","city":"Hà Nội","kind":"Công lập","areas":["Kỹ thuật","Kinh tế"],"majors":["Kỹ thuật xây dựng","Kỹ thuật ô tô","Logistics","Công nghệ thông tin"],"website":"https://utc.edu.vn","feeSummary":"12.5 – 26 triệu/năm"},{"id":"ueh","name":"Đại học Kinh tế TP.HCM","abbr":"UEH","city":"TP.HCM","kind":"Công lập","areas":["Kinh tế"],"majors":["Quản trị kinh doanh","Marketing","Tài chính - Ngân hàng","Kế toán - Kiểm toán","Logistics","Thương mại điện tử","Kinh doanh quốc tế","Luật kinh tế","Khoa học dữ liệu","Công nghệ thông tin"],"website":"https://ueh.edu.vn","feeSummary":"40 – 80 triệu/năm"},{"id":"uel","name":"Trường Đại học Kinh tế – Luật, ĐHQG TP.HCM","abbr":"UEL","city":"TP.HCM","kind":"Công lập","areas":["Kinh tế"],"majors":["Quản trị kinh doanh","Marketing","Tài chính - Ngân hàng","Kế toán - Kiểm toán","Thương mại điện tử","Kinh doanh quốc tế","Luật","Luật kinh tế"],"website":"https://uel.edu.vn","feeSummary":"35.8 – 73.5 triệu/năm"},{"id":"ftu","name":"Trường Đại học Ngoại thương","abbr":"FTU","city":"Hà Nội","kind":"Công lập","areas":["Kinh tế"],"majors":["Quản trị kinh doanh","Marketing","Tài chính - Ngân hàng","Logistics","Kinh doanh quốc tế","Kế toán - Kiểm toán","Luật kinh tế","Ngôn ngữ Anh","Thương mại điện tử"],"website":"https://ftu.edu.vn","feeSummary":"28 – 88 triệu/năm"},{"id":"neu","name":"Đại học Kinh tế Quốc dân","abbr":"NEU","city":"Hà Nội","kind":"Công lập","areas":["Kinh tế"],"majors":["Quản trị kinh doanh","Marketing","Tài chính - Ngân hàng","Kế toán - Kiểm toán","Logistics","Kinh doanh quốc tế","Thương mại điện tử","Luật kinh tế","Khoa học dữ liệu","Công nghệ thông tin"],"website":"https://neu.edu.vn","feeSummary":"20 – 68 triệu/năm"},{"id":"fpt","name":"Trường Đại học FPT","abbr":"FPT","city":"Nhiều cơ sở","kind":"Tư thục","areas":["Công nghệ","Kinh tế"],"majors":["Công nghệ thông tin","Trí tuệ nhân tạo","Quản trị kinh doanh","Marketing","Thiết kế đồ họa","Kinh doanh quốc tế","Tài chính - Ngân hàng","Ngôn ngữ Anh","Ngôn ngữ Nhật"],"website":"https://daihoc.fpt.edu.vn","feeSummary":"60 – 97.5 triệu/năm"},{"id":"tdt","name":"Trường Đại học Tôn Đức Thắng","abbr":"TDTU","city":"TP.HCM","kind":"Công lập","areas":["Kỹ thuật","Công nghệ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật điện - điện tử","Kỹ thuật xây dựng","Quản trị kinh doanh","Tài chính - Ngân hàng"],"website":"https://tdtu.edu.vn","feeSummary":"55.6 – 64 triệu/năm"},{"id":"ump","name":"Đại học Y Dược TP.HCM","abbr":"UMP","city":"TP.HCM","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Răng - Hàm - Mặt","Điều dưỡng"],"website":"https://ump.edu.vn","feeSummary":"45 – 88 triệu/năm"},{"id":"hmu","name":"Trường Đại học Y Hà Nội","abbr":"HMU","city":"Hà Nội","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Răng - Hàm - Mặt","Điều dưỡng","Y học dự phòng","Dược học","Y học cổ truyền"],"website":"https://hmu.edu.vn","feeSummary":"30 – 55.2 triệu/năm"},{"id":"pnt","name":"Trường Đại học Y khoa Phạm Ngọc Thạch","abbr":"PNT","city":"TP.HCM","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Điều dưỡng","Răng - Hàm - Mặt","Y học dự phòng","Y học cổ truyền"],"website":"https://pnt.edu.vn","feeSummary":"41.8 – 55.2 triệu/năm"},{"id":"hup","name":"Trường Đại học Dược Hà Nội","abbr":"HUP","city":"Hà Nội","kind":"Công lập","areas":["Y - Dược"],"majors":["Dược học"],"website":"https://hup.edu.vn","feeSummary":"24.5 – 52 triệu/năm"},{"id":"ctump","name":"Trường Đại học Y Dược Cần Thơ","abbr":"CTUMP","city":"Cần Thơ","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Răng - Hàm - Mặt","Điều dưỡng"],"website":"https://ctump.edu.vn","feeSummary":"44.1 – 58 triệu/năm"},{"id":"hueump","name":"Trường Đại học Y - Dược, Đại học Huế","abbr":"HUEUMP","city":"Huế","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Điều dưỡng","Y học dự phòng"],"website":"https://huemed-univ.edu.vn","feeSummary":"29.3 – 58.5 triệu/năm"},{"id":"tbump","name":"Trường Đại học Y Dược Thái Bình","abbr":"TBUMP","city":"Hưng Yên","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Điều dưỡng","Y học cổ truyền"],"website":"https://tbump.edu.vn","feeSummary":"27.6 – 41.4 triệu/năm"},{"id":"vnuump","name":"Trường Đại học Y Dược – ĐHQGHN","abbr":"VNUUMP","city":"Hà Nội","kind":"Công lập","areas":["Y - Dược"],"majors":["Y khoa","Dược học","Răng - Hàm - Mặt"],"website":"https://ump.vnu.edu.vn","feeSummary":"27.6 – 55 triệu/năm"},{"id":"hcmussh","name":"Trường Đại học Khoa học Xã hội và Nhân văn – ĐHQG TP.HCM","abbr":"USSH","city":"TP.HCM","kind":"Công lập","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Trung Quốc","Ngôn ngữ Nhật","Ngôn ngữ Hàn Quốc","Báo chí"],"website":"https://hcmussh.edu.vn","feeSummary":"15.4 – 30 triệu/năm"},{"id":"usshvnu","name":"Trường Đại học Khoa học Xã hội và Nhân văn – ĐHQGHN","abbr":"USSH-HN","city":"Hà Nội","kind":"Công lập","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Trung Quốc","Ngôn ngữ Nhật","Báo chí","Tâm lý học"],"website":"https://ussh.vnu.edu.vn","feeSummary":"15 – 35 triệu/năm"},{"id":"ulis","name":"Trường Đại học Ngoại ngữ – ĐHQGHN","abbr":"ULIS","city":"Hà Nội","kind":"Công lập","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Trung Quốc","Ngôn ngữ Nhật","Ngôn ngữ Hàn Quốc","Sư phạm tiếng Anh"],"website":"https://ulis.vnu.edu.vn","feeSummary":"21 – 38 triệu/năm"},{"id":"huflit","name":"Trường Đại học Ngoại ngữ - Tin học TP.HCM","abbr":"HUFLIT","city":"TP.HCM","kind":"Tư thục","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Trung Quốc","Ngôn ngữ Nhật","Công nghệ thông tin","Quản trị kinh doanh","Kinh doanh quốc tế","Marketing","Thương mại điện tử","Tài chính - Ngân hàng"],"website":"https://huflit.edu.vn","feeSummary":"38 – 44 triệu/năm"},{"id":"ufl","name":"Trường Đại học Ngoại ngữ, Đại học Đà Nẵng","abbr":"UFL","city":"Đà Nẵng","kind":"Công lập","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Trung Quốc","Ngôn ngữ Nhật","Sư phạm tiếng Anh"],"website":"https://ufl.udn.vn","feeSummary":"15 – 32 triệu/năm"},{"id":"hanu","name":"Trường Đại học Hà Nội","abbr":"HANU","city":"Hà Nội","kind":"Công lập","areas":["Ngôn ngữ"],"majors":["Ngôn ngữ Anh","Ngôn ngữ Nhật","Ngôn ngữ Hàn Quốc","Ngôn ngữ Trung Quốc","Marketing","Quản trị kinh doanh","Công nghệ thông tin"],"website":"https://hanu.edu.vn","feeSummary":"25 – 45 triệu/năm"},{"id":"hnue","name":"Trường Đại học Sư phạm Hà Nội","abbr":"HNUE","city":"Hà Nội","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn","Sư phạm tiếng Anh"],"website":"https://hnue.edu.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 25 tr/năm"},{"id":"hcmue","name":"Trường Đại học Sư phạm TP.HCM","abbr":"HCMUE","city":"TP.HCM","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn","Sư phạm tiếng Anh","Tâm lý học","Ngôn ngữ Anh","Công nghệ thông tin"],"website":"https://hcmue.edu.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 24 tr/năm"},{"id":"hpu2","name":"Trường Đại học Sư phạm Hà Nội 2","abbr":"HPU2","city":"Hà Nội","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn"],"website":"https://hpu2.edu.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 22 tr/năm"},{"id":"uedudn","name":"Trường Đại học Sư phạm, Đại học Đà Nẵng","abbr":"UED","city":"Đà Nẵng","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn"],"website":"https://ued.udn.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 20 tr/năm"},{"id":"hueedu","name":"Trường Đại học Sư phạm, Đại học Huế","abbr":"HUE-EDU","city":"Huế","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn"],"website":"https://dhsphue.edu.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 19.5 tr/năm"},{"id":"tnue","name":"Trường Đại học Sư phạm – Đại học Thái Nguyên","abbr":"TNUE","city":"Thái Nguyên","kind":"Công lập","areas":["Sư phạm"],"majors":["Giáo dục Tiểu học","Giáo dục Mầm non","Sư phạm Toán","Sư phạm Ngữ văn"],"website":"https://tnue.edu.vn","feeSummary":"Miễn học phí (Nghị định 116) hoặc 19 tr/năm"},{"id":"hlu","name":"Trường Đại học Luật Hà Nội","abbr":"HLU","city":"Hà Nội","kind":"Công lập","areas":["Luật"],"majors":["Luật","Luật kinh tế","Ngôn ngữ Anh"],"website":"https://hlu.edu.vn","feeSummary":"25.4 – 50.8 triệu/năm"},{"id":"hcmulaw","name":"Trường Đại học Luật TP.HCM","abbr":"ULAW","city":"TP.HCM","kind":"Công lập","areas":["Luật"],"majors":["Luật","Luật kinh tế"],"website":"https://hcmulaw.edu.vn","feeSummary":"35.25 – 83.6 triệu/năm"},{"id":"vlu","name":"Trường Đại học Văn Lang","abbr":"VLU","city":"TP.HCM","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Quản trị kinh doanh","Thiết kế đồ họa","Ngôn ngữ Anh","Điều dưỡng","Marketing","Kinh doanh quốc tế","Tài chính - Ngân hàng","Kỹ thuật ô tô","Công nghệ thông tin","Dược học"],"website":"https://vanlanguni.edu.vn","feeSummary":"45 – 95 triệu/năm"},{"id":"hutech","name":"Trường Đại học Công nghệ TP.HCM","abbr":"HUTECH","city":"TP.HCM","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Công nghệ thông tin","Quản trị kinh doanh","Ngôn ngữ Anh","Dược học","Kỹ thuật ô tô","Kỹ thuật cơ điện tử","Thiết kế đồ họa","Marketing","Tài chính - Ngân hàng","Thương mại điện tử"],"website":"https://hutech.edu.vn","feeSummary":"50 – 65 triệu/năm"},{"id":"ntt","name":"Trường Đại học Nguyễn Tất Thành","abbr":"NTTU","city":"TP.HCM","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Y khoa","Dược học","Ngôn ngữ Anh","Quản trị kinh doanh"],"website":"https://ntt.edu.vn","feeSummary":"37 – 75 triệu/năm"},{"id":"vhu","name":"Trường Đại học Văn Hiến","abbr":"VHU","city":"TP.HCM","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Ngôn ngữ Anh","Tâm lý học","Quản trị kinh doanh"],"website":"https://vhu.edu.vn","feeSummary":"32 – 45 triệu/năm"},{"id":"phenikaa","name":"Đại học Phenikaa","abbr":"PHENIKAA","city":"Hà Nội","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật cơ điện tử","Điều dưỡng","Ngôn ngữ Anh"],"website":"https://phenikaa-uni.edu.vn","feeSummary":"25.2 – 50 triệu/năm"},{"id":"dntu","name":"Trường Đại học Công nghệ Đồng Nai","abbr":"DNTU","city":"Đồng Nai","kind":"Tư thục","areas":["Đa ngành","Ngôn ngữ","Kinh tế"],"majors":["Công nghệ thông tin","Kỹ thuật ô tô","Điều dưỡng","Ngôn ngữ Anh"],"website":"https://dntu.edu.vn","feeSummary":"26 – 42 triệu/năm"},{"id":"hvnh","name":"Học viện Ngân hàng","abbr":"BA","city":"Hà Nội","kind":"Công lập","areas":["Kinh tế"],"majors":["Tài chính - Ngân hàng","Kế toán - Kiểm toán","Quản trị kinh doanh"],"website":"https://hvnh.edu.vn","feeSummary":"25 – 41.5 triệu/năm"},{"id":"hcma","name":"Học viện Tài chính","abbr":"AOF","city":"Hà Nội","kind":"Công lập","areas":["Kinh tế"],"majors":["Tài chính - Ngân hàng","Kế toán - Kiểm toán","Quản trị kinh doanh"],"website":"https://hvtc.edu.vn","feeSummary":"25 – 50 triệu/năm"},{"id":"ufm","name":"Trường Đại học Tài chính – Marketing","abbr":"UFM","city":"TP.HCM","kind":"Công lập","areas":["Kinh tế","Công nghệ"],"majors":["Marketing","Kinh doanh quốc tế","Thương mại điện tử","Tài chính - Ngân hàng","Kế toán - Kiểm toán","Quản trị kinh doanh"],"website":"https://ufm.edu.vn","feeSummary":"26 – 45 triệu/năm"},{"id":"sgu","name":"Trường Đại học Sài Gòn","abbr":"SGU","city":"TP.HCM","kind":"Công lập","areas":["Sư phạm","Công nghệ","Kinh tế"],"majors":["Sư phạm Toán","Sư phạm Ngữ văn","Sư phạm tiếng Anh","Giáo dục Tiểu học","Giáo dục Mầm non","Công nghệ thông tin","Kỹ thuật điện - điện tử","Quản trị kinh doanh"],"website":"https://sgu.edu.vn","feeSummary":"Miễn HP Sư phạm / 14 – 33 tr/năm"},{"id":"iu","name":"Trường Đại học Quốc tế – ĐHQG TP.HCM","abbr":"IU","city":"TP.HCM","kind":"Công lập","areas":["Công nghệ","Kỹ thuật","Kinh tế"],"majors":["Công nghệ thông tin","Khoa học dữ liệu","Trí tuệ nhân tạo","Logistics","Quản trị kinh doanh","Kinh doanh quốc tế","Tài chính - Ngân hàng","Ngôn ngữ Anh"],"website":"https://hcmiu.edu.vn","feeSummary":"45 – 85 triệu/năm"},{"id":"uth","name":"Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh","abbr":"UTH","city":"TP.HCM","kind":"Công lập","areas":["Kỹ thuật","Công nghệ","Kinh tế"],"majors":["Logistics","Kỹ thuật ô tô","Kỹ thuật xây dựng","Công nghệ thông tin","Kỹ thuật điện - điện tử","Quản trị kinh doanh","Kế toán - Kiểm toán"],"website":"https://ut.edu.vn","feeSummary":"14 – 42 triệu/năm"},{"id":"uah","name":"Trường Đại học Kiến trúc Thành phố Hồ Chí Minh","abbr":"UAH","city":"TP.HCM","kind":"Công lập","areas":["Kỹ thuật","Nghệ thuật"],"majors":["Thiết kế đồ họa","Kỹ thuật xây dựng","Kỹ thuật cơ điện tử"],"website":"https://uah.edu.vn","feeSummary":"24 – 85 triệu/năm"},{"id":"hcmufa","name":"Trường Đại học Mỹ thuật Thành phố Hồ Chí Minh","abbr":"HCMUFA","city":"TP.HCM","kind":"Công lập","areas":["Nghệ thuật"],"majors":["Thiết kế đồ họa"],"website":"https://hcmufa.edu.vn","feeSummary":"15 – 22 triệu/năm"}];
 const UNIBOT_TUITION = {"ptit":{"feeRange":[35.9,58.3],"feeSource":"https://tuyensinh.ptithcm.edu.vn/de-an-tuyen-sinh/thong-tin-tuyen-sinh-dai-hoc-chinh-quy-nam-2026/","feeNote":"Gồm đại trà, chương trình đặc thù và chất lượng cao","feeYear":"2026–2027"},"hust":{"feeRange":[28,68],"feeSource":"https://vnexpress.net/hoc-phi-dai-hoc-bach-khoa-ha-noi-hust-nam-hoc-2026-2027-chi-tiet-nhat-5102344.html","feeNote":"Chương trình chuẩn và nhóm giảng dạy tiếng Anh/chất lượng cao; chưa gồm tất cả liên kết quốc tế","feeYear":"2026–2027"},"hcmut":{"feeRange":[31.5,88],"feeSource":"https://vtcnews.vn/cap-nhat-hoc-phi-nam-hoc-2026-2027-cua-hon-120-truong-dai-hoc-ar1028775.html","feeNote":"Các chương trình tiêu chuẩn và tiên tiến; phụ thuộc chương trình","feeYear":"2026–2027"},"hcmus":{"sourceYear":"2026–2027","sourceName":"Thông tin tuyển sinh năm 2026 – HCMUS","sourceUrl":"https://tuyensinh.hcmus.edu.vn/2026-thong-tin-tuyen-sinh/","tuitionByMajor":{"Trí tuệ nhân tạo":40.5,"Khoa học dữ liệu":40.5,"Công nghệ thông tin":40.5},"tuitionNote":"Triệu đồng/năm 2026–2027; CNTT là mức nhóm ngành máy tính và CNTT thông thường, không áp dụng chương trình tăng cường tiếng Anh/tiên tiến.","staff":{"professors":10,"associateProfessors":67,"doctorOther":"≈250","masters":"≈400"},"staffNote":"Báo cáo tháng 5/2026: 675 cán bộ giảng dạy; các con số tiến sĩ/thạc sĩ mang tính xấp xỉ theo trường công bố. Nhóm có thể giao nhau; KHÔNG cộng để tính tổng.","feeRange":[37,70],"feeSource":"https://vtcnews.vn/cap-nhat-hoc-phi-nam-hoc-2026-2027-cua-hon-120-truong-dai-hoc-ar1028775.html","feeNote":"Khoảng học phí các chương trình năm 2026–2027","feeYear":"2026–2027"},"uit":{"feeRange":[41,140],"feeSource":"https://thuvienphapluat.vn/banan/tin-tuc/muc-hoc-phi-dai-hoc-nam-20262027-tai-cac-truong-o-tphcm-la-bao-nhieu-21752","feeNote":"Khoảng tổng hợp nhiều chương trình; cần đối chiếu theo ngành","feeYear":"2026–2027"},"uet":{"feeRange":[38,44],"feeSource":"https://vtcnews.vn/cap-nhat-hoc-phi-nam-hoc-2026-2027-cua-hon-120-truong-dai-hoc-ar1028775.html","feeNote":"Học phí dự kiến","feeYear":"2026–2027"},"uel":{"feeRange":[35.8,73.5],"feeSource":"https://tuyensinh.uel.edu.vn/faq/","feeNote":"Tiếng Việt 35,8; Co-op tiếng Anh 55; tiếng Anh 73,5","feeYear":"2026–2027"},"ftu":{"feeRange":[28,88],"feeSource":"https://thongtintuyensinh.ftu.edu.vn/admissions-methods","feeNote":"Từ chương trình chuẩn đến chương trình tiên tiến i-Hons sau hỗ trợ học bổng","feeYear":"2026–2027"},"neu":{"feeRange":[20,68],"feeSource":"https://nhandan.vn/hoc-phi-dai-hoc-chinh-quy-khoi-truong-kinh-te-nam-2026-post983683.html","feeNote":"Chương trình chuẩn 20–28; tiên tiến/chất lượng cao 41–68","feeYear":"2026–2027"},"ctu":{"feeRange":[22,40],"feeSource":"https://daihoc.fpt.edu.vn/huong-nghiep/hoc-phi-cac-truong-dai-hoc-o-can-tho/","feeNote":"Ước tính từ bài tổng hợp, không phải bảng học phí chính thức của trường","feeYear":"2026–2027"},"ueh":{"feeRange":[40,80],"feeSource":"https://thuvienphapluat.vn/banan/tin-tuc/muc-hoc-phi-dai-hoc-nam-20262027-tai-cac-truong-o-tphcm-la-bao-nhieu-21752","feeNote":"Khoảng tham khảo tổng hợp; mức học phí thực tế thu theo tín chỉ và chương trình","feeYear":"2026–2027"},"tdt":{"feeRange":[55.6,64],"feeSource":"https://www.tdtu.edu.vn/giao-duc/hoc-phi-hoc-bong-2026","feeNote":"Một số nhóm ngành năm 2026–2027; chưa bao gồm tất cả chương trình và tiếng Anh","feeYear":"2026–2027"},"ump":{"feeRange":[45,88],"feeSource":"https://ump.edu.vn","feeNote":"Từ các ngành cử nhân kỹ thuật y học/điều dưỡng (45-50 tr) đến Y khoa (82,2-88 tr), Răng-Hàm-Mặt (84,7-90 tr/năm)","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":88,"Răng - Hàm - Mặt":90,"Dược học":63.5,"Điều dưỡng":46}},"hmu":{"feeRange":[30,55.2],"feeSource":"https://hmu.edu.vn","feeNote":"Y khoa & RHM 55,2 triệu/năm; Điều dưỡng tiên tiến 41,8 triệu/năm; Điều dưỡng cơ sở 30 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":55.2,"Răng - Hàm - Mặt":55.2,"Điều dưỡng":41.8,"Y học dự phòng":30}},"pnt":{"feeRange":[41.8,55.2],"feeSource":"https://pnt.edu.vn","feeNote":"Y khoa, Dược học, RHM 55,2 triệu/năm; Điều dưỡng và nhóm kỹ thuật y học 41,8 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":55.2,"Dược học":55.2,"Điều dưỡng":41.8}},"hup":{"feeRange":[24.5,52],"feeSource":"https://hup.edu.vn","feeNote":"Dược học hệ chuẩn khoảng 24,5 triệu/năm; hệ chất lượng cao/tiên tiến khoảng 49-52 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Dược học":24.5}},"ctump":{"feeRange":[44.1,58],"feeSource":"https://ctump.edu.vn","feeNote":"Chương trình đại trà tự chủ; Y khoa và RHM cao nhất khoảng 55-58 triệu/năm; Điều dưỡng khoảng 44 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":58,"Dược học":55,"Răng - Hàm - Mặt":58,"Điều dưỡng":44.1}},"hueump":{"feeRange":[29.3,58.5],"feeSource":"https://huemed-univ.edu.vn","feeNote":"Theo lộ trình tự chủ; Điều dưỡng, Y tế công cộng từ 29,3 triệu; Y khoa, Dược học, RHM từ 50-58,5 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":58.5,"Dược học":55,"Điều dưỡng":29.3,"Y học dự phòng":29.3}},"tbump":{"feeRange":[27.6,41.4],"feeSource":"https://tbump.edu.vn","feeNote":"Khối ngành sức khỏe công lập; Y khoa, Dược học khoảng 36-41,4 triệu/năm; Điều dưỡng 27,6 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":41.4,"Dược học":41.4,"Điều dưỡng":27.6,"Y học cổ truyền":36}},"vnuump":{"feeRange":[27.6,55],"feeSource":"https://ump.vnu.edu.vn","feeNote":"Y khoa & Răng Hàm Mặt từ 55 triệu/năm; Dược học từ 51 triệu/năm; các ngành cử nhân từ 27,6 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Y khoa":55,"Dược học":51,"Răng - Hàm - Mặt":55}},"hnue":{"feeRange":[0,25],"feeSource":"https://hnue.edu.vn","feeNote":"Ngành đào tạo giáo viên được Nhà nước hỗ trợ 100% học phí + 3,63 tr/tháng (Nghị định 116). Ngành ngoài sư phạm: 14–25 tr/năm","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Sư phạm tiếng Anh":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"hcmue":{"feeRange":[0,24],"feeSource":"https://hcmue.edu.vn","feeNote":"Miễn 100% học phí theo Nghị định 116 cho khối Sư phạm. Các ngành cử nhân ngoài sư phạm thu khoảng 14–24 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Sư phạm tiếng Anh":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"hpu2":{"feeRange":[0,22],"feeSource":"https://hpu2.edu.vn","feeNote":"Ngành đào tạo giáo viên miễn học phí (NĐ 116); ngành ngoài sư phạm thu theo trần Nghị định 97","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"uedudn":{"feeRange":[0,20],"feeSource":"https://ued.udn.vn","feeNote":"Khối sư phạm miễn học phí theo quy định nhà nước; nhóm ngành cử nhân khoa học xã hội và tự nhiên thu khoảng 14–20 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"hueedu":{"feeRange":[0,19.5],"feeSource":"https://dhsphue.edu.vn","feeNote":"Sinh viên sư phạm được nhận trợ cấp và miễn học phí; hệ ngoài sư phạm tính theo tín chỉ khoảng 14-19,5 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"tnue":{"feeRange":[0,19],"feeSource":"https://tnue.edu.vn","feeNote":"Hưởng chính sách miễn học phí ngành sư phạm theo Nghị định 116 của Chính phủ","feeYear":"2025–2026","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0}},"hlu":{"feeRange":[25.4,50.8],"feeSource":"https://hlu.edu.vn","feeNote":"Chương trình đại trà 25,38 triệu/năm (~725.000 đ/tín chỉ); Chương trình Chất lượng cao khoảng 50,76 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Luật":25.38,"Luật kinh tế":25.38}},"hcmulaw":{"feeRange":[35.25,83.6],"feeSource":"https://hcmulaw.edu.vn","feeNote":"Hệ chính quy chuẩn Luật & Quản trị kinh doanh 35,25 triệu/năm; Quản trị - Luật 41,8 triệu/năm; Chất lượng cao 70,5–83,6 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Luật":35.25,"Luật kinh tế":35.25}},"hcmute":{"feeRange":[28.8,58],"feeSource":"https://hcmute.edu.vn","feeNote":"Hệ chuẩn tiếng Việt từ 28,8–36 triệu/năm; Hệ đào tạo bằng tiếng Anh từ 49–58 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":36,"Kỹ thuật cơ điện tử":36,"Kỹ thuật ô tô":36,"Quản trị kinh doanh":28.8,"Logistics":30}},"utc":{"feeRange":[12.5,26],"feeSource":"https://utc.edu.vn","feeNote":"Chương trình chuẩn khối Kỹ thuật khoảng 466.000 đ/tín (~14–15 triệu/năm); Khối Kinh tế khoảng 400.000 đ/tín (~12,5 triệu/năm); Hệ CLC khoảng 22–26 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Kỹ thuật xây dựng":15,"Kỹ thuật ô tô":15,"Logistics":13.5,"Công nghệ thông tin":15}},"huce":{"feeRange":[16.4,45],"feeSource":"https://huce.edu.vn","feeNote":"Chương trình chuẩn khoảng 16,4 triệu/năm (1,64 tr/tháng); Các chương trình liên kết, Anh ngữ/Pháp ngữ từ 30–45 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Kỹ thuật xây dựng":16.4,"Công nghệ thông tin":16.4,"Kỹ thuật điện - điện tử":16.4}},"hau":{"feeRange":[13.5,40],"feeSource":"https://hau.edu.vn","feeNote":"Thiết kế đồ họa, thời trang khoảng 13,5 triệu/năm; Khối Kiến trúc, Xây dựng khoảng 16,4 triệu/năm; Tiên tiến khoảng 40 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Kỹ thuật xây dựng":16.4,"Thiết kế đồ họa":13.5}},"ou":{"feeRange":[22,45],"feeSource":"https://ou.edu.vn","feeNote":"Chương trình đại trà dao động 22–27 triệu/năm; Chương trình Chất lượng cao từ 40–45 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Quản trị kinh doanh":24,"Marketing":24,"Kế toán - Kiểm toán":24,"Công nghệ thông tin":26}},"hou":{"feeRange":[19.5,21],"feeSource":"https://hou.edu.vn","feeNote":"Kiến trúc/Đồ họa khoảng 19,5 triệu/năm; Kinh tế, Luật, CNTT khoảng 20,5 triệu/năm; Ngôn ngữ khoảng 20,9 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Quản trị kinh doanh":20.5,"Kế toán - Kiểm toán":20.5,"Công nghệ thông tin":20.5,"Thương mại điện tử":20.5}},"hvnh":{"feeRange":[25,41.5],"feeSource":"https://hvnh.edu.vn","feeNote":"Chương trình chuẩn khoảng 25-26,5 triệu/năm (740k-785k/tín); Chương trình Chất lượng cao 37 triệu/năm; Định hướng Nhật Bản 40-41,5 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Tài chính - Ngân hàng":25,"Kế toán - Kiểm toán":25,"Quản trị kinh doanh":25}},"hcma":{"feeRange":[25,50],"feeSource":"https://hvtc.edu.vn","feeNote":"Chương trình chuẩn 25 triệu/năm; Chương trình định hướng chứng chỉ quốc tế 50 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Tài chính - Ngân hàng":25,"Kế toán - Kiểm toán":25,"Quản trị kinh doanh":25}},"hcmussh":{"feeRange":[15.4,30],"feeSource":"https://hcmussh.edu.vn","feeNote":"Nhóm ngành khoa học xã hội cơ bản từ 15,4 triệu/năm; Báo chí, Ngôn ngữ Anh/Trung/Hàn từ 24-30 triệu/năm; Chất lượng cao 60 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":26,"Ngôn ngữ Trung Quốc":24,"Báo chí":24,"Ngôn ngữ Nhật":24,"Ngôn ngữ Hàn Quốc":24}},"usshvnu":{"feeRange":[15,35],"feeSource":"https://ussh.vnu.edu.vn","feeNote":"Hệ chuẩn theo quy định ĐHQGHN; Ngành Báo chí, Tâm lý học, Ngôn ngữ Anh chương trình chất lượng cao từ 30-35 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":30,"Báo chí":28,"Tâm lý học":22,"Ngôn ngữ Trung Quốc":25,"Ngôn ngữ Nhật":25}},"ulis":{"feeRange":[21,38],"feeSource":"https://ulis.vnu.edu.vn","feeNote":"Ngôn ngữ Anh, Pháp, Đức, Trung, Nhật, Hàn khoảng 38 triệu/năm (1 tr/tín); Ngôn ngữ Nga, Ả Rập 21 triệu/năm; Sư phạm tiếng Anh miễn học phí theo NĐ 116","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":38,"Ngôn ngữ Trung Quốc":38,"Ngôn ngữ Nhật":38,"Ngôn ngữ Hàn Quốc":38,"Sư phạm tiếng Anh":0}},"hanu":{"feeRange":[25,45],"feeSource":"https://hanu.edu.vn","feeNote":"Ngành ngôn ngữ chuẩn 720.000 đ/tín (~25–28 triệu/năm); Các ngành dạy bằng tiếng Anh (CNTT, QTKD) khoảng 32–40 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":28,"Ngôn ngữ Trung Quốc":28,"Ngôn ngữ Nhật":28,"Ngôn ngữ Hàn Quốc":28}},"ufl":{"feeRange":[15,32],"feeSource":"https://ufl.udn.vn","feeNote":"Chương trình chuẩn Ngôn ngữ 431.000 đ/tín (~15–17 triệu/năm); Chương trình Chất lượng cao khoảng 28–32 triệu/năm; Sư phạm tiếng Anh miễn học phí (NĐ 116)","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":17,"Ngôn ngữ Trung Quốc":16,"Ngôn ngữ Nhật":16,"Sư phạm tiếng Anh":0}},"huflit":{"feeRange":[38,44],"feeSource":"https://huflit.edu.vn","feeNote":"Tính theo tín chỉ (1.230.000 đ/tín lý thuyết, thực hành nhân 1.5). Trung bình 38–44 triệu/năm và cam kết không tăng học phí","feeYear":"2025–2026","tuitionByMajor":{"Ngôn ngữ Anh":40,"Ngôn ngữ Trung Quốc":40,"Ngôn ngữ Nhật":40,"Công nghệ thông tin":42}},"fpt":{"feeRange":[60,97.5],"feeSource":"https://daihoc.fpt.edu.vn","feeNote":"Hà Nội & TP.HCM: 28,7-32,5 triệu/học kỳ (năm 3 kỳ ~ 86-97,5 triệu/năm); Phân hiệu Đà Nẵng, Cần Thơ, Quy Nhơn ưu đãi khoảng 60-68 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":97.5,"Trí tuệ nhân tạo":97.5,"Quản trị kinh doanh":86,"Marketing":86,"Thiết kế đồ họa":86}},"duytan":{"feeRange":[28,98.8],"feeSource":"https://duytan.edu.vn","feeNote":"Chương trình chuẩn từ 28–35 triệu/năm; Tiên tiến quốc tế CMU/PSU từ 38–45 triệu/năm; Bác sĩ Đa khoa 94,4 triệu/năm; Bác sĩ RHM 98,8 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":32,"Quản trị kinh doanh":28,"Marketing":28,"Kỹ thuật xây dựng":28}},"vlu":{"feeRange":[45,95],"feeSource":"https://vanlanguni.edu.vn","feeNote":"Chương trình tiêu chuẩn từ 45–70 triệu/năm (1-1,6 tr/tín); Chương trình đặc biệt từ 80–95 triệu/năm; Khối sức khỏe/Y khoa có khung riêng cao hơn","feeYear":"2025–2026","tuitionByMajor":{"Quản trị kinh doanh":55,"Thiết kế đồ họa":60,"Ngôn ngữ Anh":50,"Điều dưỡng":55}},"hutech":{"feeRange":[50,65],"feeSource":"https://hutech.edu.vn","feeNote":"Tính theo tín chỉ (khoảng 1.400.000 đ/tín chỉ). Năm học gồm 3 kỳ, trung bình 50–60 triệu/năm; Khối Dược học khoảng 65 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":56,"Quản trị kinh doanh":52,"Ngôn ngữ Anh":50,"Dược học":65}},"ntt":{"feeRange":[37,75],"feeSource":"https://ntt.edu.vn","feeNote":"Khối Kinh tế, Xã hội, Công nghệ từ 37–55 triệu/năm; Dược học ~52 triệu/năm; Y khoa ~152 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Quản trị kinh doanh":42,"Ngôn ngữ Anh":38,"Dược học":52,"Y khoa":152}},"vhu":{"feeRange":[32,45],"feeSource":"https://vhu.edu.vn","feeNote":"Tính theo tín chỉ (728.000 – 1.537.000 đ/tín). Trung bình khoảng 32–45 triệu/năm (3 học kỳ), cam kết không tăng học phí toàn khóa","feeYear":"2025–2026","tuitionByMajor":{"Quản trị kinh doanh":38,"Ngôn ngữ Anh":36,"Tâm lý học":38}},"phenikaa":{"feeRange":[25.2,50],"feeSource":"https://phenikaa-uni.edu.vn","feeNote":"Khối Kỹ thuật & Kinh tế từ 25,2–46,2 triệu/năm (CNTT ~35,2 tr); Điều dưỡng 32 tr; Dược học 48 tr; Y khoa hệ đặc thù 150 tr/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":35.2,"Kỹ thuật cơ điện tử":32,"Điều dưỡng":32,"Ngôn ngữ Anh":28}},"dntu":{"feeRange":[26,42],"feeSource":"https://dntu.edu.vn","feeNote":"Thu theo tín chỉ định mức; Khối Công nghệ & Kinh tế khoảng 26–34 triệu/năm; Khối Điều dưỡng khoảng 38–42 triệu/năm","feeYear":"2025–2026","tuitionByMajor":{"Công nghệ thông tin":32,"Kỹ thuật ô tô":32,"Điều dưỡng":38,"Ngôn ngữ Anh":28}},"ufm":{"feeRange":[26,45],"feeSource":"https://tuyensinh.ufm.edu.vn","feeNote":"Chương trình chuẩn khoảng 26-28 triệu đồng/năm; Chương trình đặc thù và chất lượng cao khoảng 40-45 triệu đồng/năm.","feeYear":"2026–2027","tuitionByMajor":{"Marketing":27.5,"Kinh doanh quốc tế":27.5,"Thương mại điện tử":27.5,"Tài chính - Ngân hàng":26,"Kế toán - Kiểm toán":26,"Quản trị kinh doanh":26}},"sgu":{"feeRange":[0,33],"feeSource":"https://sgu.edu.vn","feeNote":"Sinh viên ngành Sư phạm được miễn 100% học phí và hỗ trợ sinh hoạt phí theo Nghị định 116. Các ngành ngoài sư phạm từ 14 – 33 triệu đồng/năm tùy chương trình.","feeYear":"2026–2027","tuitionByMajor":{"Sư phạm Toán":0,"Sư phạm Ngữ văn":0,"Sư phạm tiếng Anh":0,"Giáo dục Tiểu học":0,"Giáo dục Mầm non":0,"Công nghệ thông tin":28.5,"Kỹ thuật điện - điện tử":26,"Quản trị kinh doanh":24.5}},"iu":{"feeRange":[45,85],"feeSource":"https://hcmiu.edu.vn","feeNote":"Chương trình do ĐH Quốc tế cấp bằng khoảng 45–55 triệu/năm; Chương trình liên kết quốc tế (giai đoạn 1 tại Việt Nam) khoảng 65–85 triệu/năm.","feeYear":"2026–2027","tuitionByMajor":{"Công nghệ thông tin":50,"Khoa học dữ liệu":50,"Trí tuệ nhân tạo":50,"Logistics":50,"Quản trị kinh doanh":48,"Kinh doanh quốc tế":48,"Tài chính - Ngân hàng":48,"Ngôn ngữ Anh":45}},"uth":{"feeRange":[14,42],"feeSource":"https://ut.edu.vn/tuyen-sinh/","feeNote":"Chương trình chuẩn khoảng 14-16 triệu/năm; Chương trình chất lượng cao khoảng 38-42 triệu/năm.","feeYear":"2026–2027","tuitionByMajor":{"Logistics":28,"Kỹ thuật ô tô":26.5,"Kỹ thuật xây dựng":22,"Công nghệ thông tin":28,"Kỹ thuật điện - điện tử":26,"Quản trị kinh doanh":24,"Kế toán - Kiểm toán":24}},"uah":{"feeRange":[24,85],"feeSource":"https://uah.edu.vn","feeNote":"Chương trình đại trà khoảng 24-28 triệu đồng/năm; Chương trình tiên tiến / chất lượng cao từ 50 đến 85 triệu đồng/năm.","feeYear":"2026–2027","tuitionByMajor":{"Thiết kế đồ họa":28.5,"Kỹ thuật xây dựng":24,"Kỹ thuật cơ điện tử":24}},"hcmufa":{"feeRange":[15,22],"feeSource":"https://hcmufa.edu.vn","feeNote":"Học phí theo định mức khối ngành nghệ thuật nhà nước quy định, từ 1.5 – 2.2 triệu đồng/tháng (15 – 22 triệu/năm).","feeYear":"2026–2027","tuitionByMajor":{"Thiết kế đồ họa":18.5}}};
@@ -99,7 +99,7 @@ class UniBot {
             <div>
               <h3 class="unibot-title">
                 UniBot AI
-                <span class="unibot-tag">2026</span>
+                <span class="unibot-tag">Siêu tốc</span>
               </h3>
               <p class="unibot-subtitle">
                 <span class="unibot-status-dot"></span>
@@ -169,9 +169,9 @@ class UniBot {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
-              Gemini AI & Tri thức UniFind
+              Gemini AI &amp; Tri thức Tuyển sinh
             </span>
-            <span>Miễn phí 100%</span>
+            <span>Phản hồi tức thì</span>
           </div>
         </div>
       </div>
@@ -298,7 +298,7 @@ class UniBot {
 
     if (this.loading) {
       body.innerHTML += `
-        <div class="unibot-message unibot-bot">
+        <div class="unibot-message unibot-bot" id="unibot-loading-indicator">
           <div class="unibot-typing">
             <span class="unibot-dot"></span>
             <span class="unibot-dot"></span>
@@ -345,14 +345,28 @@ class UniBot {
     this.loading = true;
     this.renderMessages();
 
-    let reply = '';
+    // 1. TỐI ƯU SIÊU TỐC: Kiểm tra ngay trong Hệ tri thức cục bộ (0.01 giây phản hồi)
+    const localAnswer = this.findLocalAnswer(query);
 
-    // 1. Thử gọi Gemini AI qua Vercel /api/chat hoặc custom key
-    reply = await this.queryGeminiAI(query);
+    if (localAnswer) {
+      // Phản hồi tức thì trong 150ms để tạo cảm giác tự nhiên mượt mà
+      await new Promise(r => setTimeout(r, 150));
+      this.loading = false;
+      this.messages.push({
+        role: 'bot',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        text: localAnswer
+      });
+      this.saveMessages();
+      this.renderMessages();
+      return;
+    }
 
-    // 2. Nếu Gemini không phản hồi, fallback về Hệ tri thức ngoại tuyến
+    // 2. Nếu là câu hỏi mở rộng / tâm sự / phân tích chuyên sâu -> Gọi Gemini Flash Lite
+    let reply = await this.queryGeminiAI(query);
+
     if (!reply) {
-      reply = this.queryKnowledgeEngine(query);
+      reply = this.getDefaultGuide();
     }
 
     this.loading = false;
@@ -366,58 +380,44 @@ class UniBot {
   }
 
   async queryGeminiAI(query) {
-    // 1. Kiểm tra API Key cá nhân người dùng nhập (nếu có)
-    if (this.customApiKey) {
-      try {
-        const sysPrompt = `Bạn là UniBot AI, trợ lý tư vấn tuyển sinh đại học tại Việt Nam của nền tảng UniFind. Hãy trả lời thân thiện, chính xác, định dạng gạch đầu dòng rõ ràng.`;
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${this.customApiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              { role: 'user', parts: [{ text: `${sysPrompt}\n\nCâu hỏi của thí sinh: ${query}` }] }
-            ]
-          })
-        });
-        const data = await res.json();
-        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-          return data.candidates[0].content.parts[0].text;
-        }
-      } catch (e) {
-        console.warn('Gemini Direct call failed, trying serverless API...', e);
-      }
-    }
-
-    // 2. Gọi Vercel Serverless /api/chat (đã cấu hình GEMINI_API_KEY)
+    // Gọi Vercel Serverless /api/chat
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6500);
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           message: query,
-          chatHistory: this.messages.slice(-6).map(m => ({
+          chatHistory: this.messages.slice(-4).map(m => ({
             role: m.role === 'bot' ? 'model' : 'user',
             parts: [{ text: m.text }]
           }))
         })
       });
+
+      clearTimeout(timeoutId);
+
       if (res.ok) {
         const data = await res.json();
-        if (data.reply && !data.reply.includes('Lỗi API') && !data.reply.includes('chưa kết nối được')) {
-          return data.reply;
-        }
+        if (data.reply) return data.reply;
       }
     } catch (e) {
-      console.warn('Vercel API chat failed, falling back to Knowledge Engine', e);
+      console.warn('Gemini call failed or timed out:', e);
     }
 
     return null;
   }
 
-  queryKnowledgeEngine(rawQuery) {
+  // ====================================================
+  // Tìm kiếm tức thì trong bộ nhớ (Phản hồi < 0.05 giây)
+  // ====================================================
+  findLocalAnswer(rawQuery) {
     const q = rawQuery.toLowerCase().trim();
 
-    // 1. So sánh 2 trường
+    // 1. So sánh 2 trường (VD: "so sánh hust và ptit")
     if (q.includes('so sánh') || q.includes('vs') || q.includes('khác nhau')) {
       const foundSchools = UNIBOT_SCHOOLS.filter(s => 
         q.includes(s.id.toLowerCase()) || 
@@ -431,19 +431,19 @@ class UniBot {
         const t1 = UNIBOT_TUITION[s1.id] || {};
         const t2 = UNIBOT_TUITION[s2.id] || {};
 
-        return `📊 **Đối chiếu so sánh giữa ${s1.abbr || s1.name} và ${s2.abbr || s2.name}**:\n\n` +
-          `* 🏛️ **Loại hình**: ${s1.abbr}: ${s1.kind} (${s1.city}) vs ${s2.abbr}: ${s2.kind} (${s2.city})\n` +
-          `* 💰 **Học phí dự kiến (2026–2027)**:\n` +
+        return `📊 **Đối chiếu nhanh giữa ${s1.abbr || s1.name} và ${s2.abbr || s2.name}**:\n\n` +
+          `* 🏛️ **Loại hình**: ${s1.abbr}: ${s1.kind} (${s1.city}) | ${s2.abbr}: ${s2.kind} (${s2.city})\n` +
+          `* 💰 **Học phí 2026–2027**:\n` +
           `  - **${s1.abbr}**: ${t1.feeRange ? `${t1.feeRange[0]} – ${t1.feeRange[1]} triệu/năm` : s1.feeSummary || 'Đang cập nhật'}\n` +
           `  - **${s2.abbr}**: ${t2.feeRange ? `${t2.feeRange[0]} – ${t2.feeRange[1]} triệu/năm` : s2.feeSummary || 'Đang cập nhật'}\n` +
           `* 🎯 **Ngành mũi nhọn**:\n` +
           `  - ${s1.abbr}: ${s1.majors.slice(0, 4).join(', ')}\n` +
           `  - ${s2.abbr}: ${s2.majors.slice(0, 4).join(', ')}\n\n` +
-          `👉 Bạn có thể vào tính năng [So sánh chi tiết trên UniFind](/compare) để đối chiếu thêm nhé!`;
+          `👉 Bạn có thể mở mục [So sánh chi tiết trên UniFind](/compare) để đối chiếu trực tiếp nhé!`;
       }
     }
 
-    // 2. Gợi ý theo điểm
+    // 2. Gợi ý theo điểm số (VD: "24 điểm", "25 điểm khối A00")
     const scoreMatch = q.match(/(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:điểm|đ)/i);
     if (scoreMatch) {
       const userScore = parseFloat(scoreMatch[1].replace(',', '.'));
@@ -455,7 +455,7 @@ class UniBot {
 
           for (const item of majorList) {
             const score2025 = item.score2025 || item.score2024;
-            if (score2025 && Math.abs(score2025 - userScore) <= 1.5) {
+            if (score2025 && Math.abs(score2025 - userScore) <= 1.2) {
               suitable.push({
                 schoolName: school.abbr || school.name,
                 schoolId: school.id,
@@ -469,17 +469,17 @@ class UniBot {
 
         if (suitable.length > 0) {
           const samples = suitable.slice(0, 5);
-          let res = `🎯 Với mức điểm khoảng **${userScore} điểm**, dưới đây là một số ngành & trường có điểm chuẩn năm 2025 rất phù hợp với bạn:\n\n`;
+          let res = `🎯 Với mức điểm khoảng **${userScore} điểm**, dưới đây là những gợi ý trường & ngành chuẩn 2025 rất sát với bạn:\n\n`;
           samples.forEach(s => {
             res += `* **[${s.schoolName}](/school/${s.schoolId})** - Ngành: **${s.major}**\n  - Tổ hợp: \`${s.combination}\` | Điểm chuẩn 2025: **${s.score}**\n`;
           });
-          res += `\n💡 *Mẹo: Hãy đăng ký nguyện vọng yêu thích nhất ở NV1, kèm thêm 2-3 nguyện vọng an toàn thấp hơn điểm của bạn từ 0.5 - 1.5 điểm nhé! Tra cứu thêm tại mục [Danh sách trường](/schools).* `;
+          res += `\n💡 *Lời khuyên: Hãy đặt nguyện vọng mơ ước ở NV1-2, và 2-3 nguyện vọng an toàn thấp hơn điểm của bạn từ 0.5 - 1.5 điểm tại [Danh sách trường](/schools).* `;
           return res;
         }
       }
     }
 
-    // 3. Học phí trường
+    // 3. Học phí trường (VD: "học phí hust", "học phí bách khoa")
     if (q.includes('học phí') || q.includes('tiền học') || q.includes('bao nhiêu tiền') || q.includes('chi phí')) {
       const matchedSchool = UNIBOT_SCHOOLS.find(s => 
         q.includes(s.id.toLowerCase()) || 
@@ -489,20 +489,20 @@ class UniBot {
 
       if (matchedSchool) {
         const t = UNIBOT_TUITION[matchedSchool.id];
-        let res = `💰 **Thông tin học phí của [${matchedSchool.name}](/school/${matchedSchool.id})**:\n\n`;
+        let res = `💰 **Thông tin học phí [${matchedSchool.name}](/school/${matchedSchool.id})**:\n\n`;
         if (t && t.feeRange) {
-          res += `* **Khoảng học phí năm học 2026–2027**: **${t.feeRange[0]} – ${t.feeRange[1]} triệu đồng/năm**.\n`;
+          res += `* **Học phí dự kiến 2026–2027**: **${t.feeRange[0]} – ${t.feeRange[1]} triệu đồng/năm**.\n`;
           if (t.feeNote) res += `* 📝 **Chi tiết**: ${t.feeNote}\n`;
-          if (t.feeSource) res += `* 🔗 [Nguồn trích dẫn chính thức](${t.feeSource})\n`;
+          if (t.feeSource) res += `* 🔗 [Nguồn công bố](${t.feeSource})\n`;
         } else {
-          res += `* Mức ước tính: **${matchedSchool.feeSummary || 'Từ 20 – 50 triệu/năm'}**.\n`;
+          res += `* Mức ước tính: **${matchedSchool.feeSummary || '20 – 50 triệu/năm'}**.\n`;
         }
         res += `\nXem đầy đủ tại trang [Chi tiết trường ${matchedSchool.abbr || ''}](/school/${matchedSchool.id}).`;
         return res;
       }
     }
 
-    // 4. Điểm chuẩn trường
+    // 4. Điểm chuẩn trường (VD: "điểm chuẩn hcmus", "điểm chuẩn bách khoa")
     if (q.includes('điểm chuẩn') || q.includes('điểm trúng tuyển') || q.includes('lấy bao nhiêu điểm')) {
       const matchedSchool = UNIBOT_SCHOOLS.find(s => 
         q.includes(s.id.toLowerCase()) || 
@@ -520,20 +520,20 @@ class UniBot {
           if (scoreList.length > 5) {
             res += `\n*...và còn ${scoreList.length - 5} ngành khác.*\n`;
           }
-          res += `\nXem đầy đủ bảng điểm chuẩn tại [Trang chi tiết ${matchedSchool.abbr || ''}](/school/${matchedSchool.id}).`;
+          res += `\nXem đầy đủ tại [Trang chi tiết ${matchedSchool.abbr || ''}](/school/${matchedSchool.id}).`;
           return res;
         }
       }
     }
 
-    // 5. Ngành học
+    // 5. Ngành học (VD: "ngành cntt", "trí tuệ nhân tạo")
     const matchedMajor = UNIBOT_MAJORS.find(m => 
       q.includes(m.name.toLowerCase()) || 
       (m.name.toLowerCase().includes('công nghệ thông tin') && (q.includes('cntt') || q.includes('it'))) ||
       (m.name.toLowerCase().includes('trí tuệ nhân tạo') && q.includes('ai'))
     );
 
-    if (matchedMajor) {
+    if (matchedMajor && (q.includes('ngành') || q.includes('học gì') || q.includes('việc làm'))) {
       const trainingSchools = UNIBOT_SCHOOLS.filter(s => s.majors && s.majors.some(sm => sm.toLowerCase().includes(matchedMajor.name.toLowerCase()) || matchedMajor.name.toLowerCase().includes(sm.toLowerCase())));
 
       let res = `${matchedMajor.icon || '🎓'} **Ngành ${matchedMajor.name}** (${matchedMajor.group})\n\n` +
@@ -544,7 +544,7 @@ class UniBot {
       if (trainingSchools.length > 0) {
         res += `🏛️ **Các trường đào tạo tiêu biểu**: ${trainingSchools.slice(0, 6).map(s => `[${s.abbr || s.name}](/school/${s.id})`).join(', ')}.\n\n`;
       }
-      res += `Khám phá thêm các nhóm ngành khác tại [Danh mục ngành học](/majors).`;
+      res += `Khám phá thêm các nhóm ngành tại [Danh mục ngành học](/majors).`;
       return res;
     }
 
@@ -553,19 +553,23 @@ class UniBot {
       return `🎉 **Chính sách hỗ trợ học phí nổi bật năm 2026**:\n\n` +
         `1. **Khối trường Sư phạm (Nghị định 116/2020/NĐ-CP)**:\n` +
         `   - Sinh viên trúng tuyển ngành sư phạm tại các trường công lập được **miễn 100% học phí**.\n` +
-        `   - Nhận thêm trợ cấp sinh hoạt phí **3.63 triệu đồng/tháng**.\n\n` +
+        `   - Nhận trợ cấp sinh hoạt phí **3.63 triệu đồng/tháng**.\n\n` +
         `2. **Khối Công an - Quân đội**:\n` +
-        `   - Được đài thọ 100% ăn, ở, học tập và được phân công công tác.\n\n` +
-        `Xem thêm tin tức tuyển sinh tại mục [Thông báo tuyển sinh](/notifications).`;
+        `   - Được đài thọ 100% ăn, ở, học tập và được phân công công tác sau tốt nghiệp.\n\n` +
+        `Xem thêm tại mục [Thông báo tuyển sinh](/notifications).`;
     }
 
+    return null;
+  }
+
+  getDefaultGuide() {
     return `Cảm ơn câu hỏi của bạn! 🎓\n\n` +
-      `Mình có thể hỗ trợ giải đáp nhanh về:\n` +
-      `* 📚 **Điểm chuẩn trúng tuyển 3 năm**\n` +
-      `* 💰 **Học phí dự kiến 2026–2027**\n` +
-      `* 🎯 **Gợi ý trường phù hợp theo điểm thi**\n` +
-      `* ⚖️ **So sánh trực diện giữa 2 trường**\n\n` +
-      `Bạn có thể thử hỏi: *"24 điểm khối A00 nên học trường nào?"*, *"Học phí Bách Khoa"*, hoặc *"So sánh Bách Khoa và PTIT"* nhé!`;
+      `Mình có thể trả lời tức thì về:\n` +
+      `* 📚 **Điểm chuẩn trúng tuyển 3 năm**: VD *"Điểm chuẩn Bách Khoa"*, *"Điểm chuẩn HCMUS"*...\n` +
+      `* 💰 **Học phí 2026–2027**: VD *"Học phí Ngoại thương"*, *"Học phí PTIT"*...\n` +
+      `* 🎯 **Gợi ý ngành theo điểm**: VD *"24 điểm khối A00 nên học gì?"*...\n` +
+      `* ⚖️ **So sánh trực diện**: VD *"So sánh Bách Khoa và PTIT"*...\n\n` +
+      `Hãy thử hỏi một trong những câu trên để nhận phản hồi ngay lập tức nhé!`;
   }
 }
 
